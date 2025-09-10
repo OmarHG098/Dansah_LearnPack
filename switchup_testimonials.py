@@ -78,15 +78,15 @@ def get_reviews_from_page():
                 description = description_tag.get_text(" ", strip=True)
 
             reviews.append({
-                'name': name,
-                'graduation_date': graduation_date,
-                'review_date': review_date,
-                'course': course,
-                'overall_rating': overall,
+                'Name': name,
+                'Graduation_Date': graduation_date,
+                'Review_Date': review_date,
+                'Course': course,
+                'Overall_Rating': overall,
                 'curriculum_rating': curriculum,
-                'job_support_rating': job_support,
-                'title': title,
-                'description': description
+                'Job_Support_Rating': job_support,
+                'Title': title,
+                'Review': description
             })
         except Exception as e:
             print(f"⚠️ Skipping review due to error: {e}")

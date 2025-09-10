@@ -5,6 +5,8 @@ pd.set_option('display.max_columns', None)
 # create a dataframe
 df = pd.read_csv("/workspaces/Dansah_LearnPack/nps_reviews.csv")
 
+df.rename(columns={'comment':'Review'}, inplace=True)
+
 # Apply categorization and expand dictionary into separate columns
 category_df = df.apply(
     lambda row: pd.Series(categorize_review(body=row["comment"])),

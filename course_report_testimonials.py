@@ -70,12 +70,12 @@ def get_reviews_from_page():
             review_text = None
 
         review_data = {
-            'name': name.text.strip() if name else None,
-            'role': role.text.strip() if role else None,
-            'verification': verification.text.strip() if verification else None,
-            'date': date.text.strip() if date else None,
-            'headline': headline.text.strip() if headline else None,
-            'review_body': review_text
+            'Name': name.text.strip() if name else None,
+            'Role': role.text.strip() if role else None,
+            'Verification': verification.text.strip() if verification else None,
+            'Date': date.text.strip() if date else None,
+            'Headline': headline.text.strip() if headline else None,
+            'Review': review_text
         }
 
         # Initialize all expected rating fields with None
@@ -123,7 +123,7 @@ while True:
     reviews = get_reviews_from_page()
 
     if reviews:
-        first_anchor = (reviews[0]['name'], reviews[0]['date'])
+        first_anchor = (reviews[0]['Name'], reviews[0]['Date'])
         if first_anchor == seen_first_review:
             print("Duplicate page detected. Stopping.")
             break
@@ -151,7 +151,7 @@ df = pd.DataFrame(all_reviews)
 
 # Apply categorization and expand dictionary into separate columns
 category_df = df.apply(
-    lambda row: pd.Series(categorize_review(row.get("headline"), row.get("review_body"))),
+    lambda row: pd.Series(categorize_review(row.get("Headline"), row.get("Review"))),
     axis=1
 )
 
