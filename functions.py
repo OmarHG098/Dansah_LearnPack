@@ -35,25 +35,15 @@ def categorize_review(headline=None, body=None):
         result[category] = int(any(re.search(r"\b" + re.escape(normalize_text(k)) + r"\b", combined_text) for k in keywords))
     return result
 
-def pull_reviews(df, review):
+def pull_reviews(df):
     
-    review_df = df[[review, "OnlinePlatform", "MentorsTeachers", "Price", "MentorsTeachers"
+    review_df = df[['Review', "OnlinePlatform", "MentorsTeachers", "Price", "MentorsTeachers",
     "Price","CareerSupport", "ContentSyllabus", "Job Guarantee", "FullStack", "Cybersecurity", 
     "DataScience","AppliedAI", "Outcomes", "Scholarships", "Rigobot", "LearnPack"]]
 
-    review_df.columns.values[0] = 'Review'
-
     return  review_df
-
 
 def concat_dataframes(df_list:list):
     full_data = pd.concat(df_list, axis=0)
 
     return full_data
-
-
-
-
-
-
-
