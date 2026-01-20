@@ -77,9 +77,10 @@ def standardize_date(date_string):
 
 def pull_reviews(df):
     """
-    Extract Name + ReviewDate + Review + 16 category columns from platform CSV.
+    Extract Name + ReviewDate + Review + Question + 16 category columns from platform CSV.
     Handles different column naming across platforms and standardizes dates.
     NPS reviews without names default to 'Anonymous'.
+    Question column (from 'title' in NPS) defaults to empty string for other platforms.
     """
     # Handle Name column (all platforms have it except NPS)
     if 'Name' not in df.columns:
@@ -97,9 +98,15 @@ def pull_reviews(df):
     else:
         df['ReviewDate'] = 'Unknown'
     
-    # Select columns in correct order: Name, ReviewDate, Review, then 16 categories (no duplicates)
+    # Add Question column (from 'title' if exists, otherwise empty)
+    if 'title' in df.columns:
+        df['Question'] = df['title']
+    else:
+        df['Question'] = ''
+    
+    # Select columns in correct order: Name, ReviewDate, Review, Question, then 16 categories (no duplicates)
     review_df = df[[
-        'Name', 'ReviewDate', 'Review',
+        'Name', 'ReviewDate', 'Review', 'Question',
         'OnlinePlatform', 'MentorsTeachers', 'Price', 'CareerSupport', 'ContentSyllabus',
         'Job Guarantee', 'FullStack', 'Cybersecurity', 'DataScience', 'AppliedAI',
         'Outcomes', 'Scholarships', 'Rigobot', 'LearnPack'

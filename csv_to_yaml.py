@@ -29,7 +29,7 @@ def transform_csv_to_yaml(csv_path, yaml_path):
     df = pd.read_csv(csv_path)
     
     # Verify expected columns exist
-    expected_cols = ["Name", "ReviewDate", "Review"] + CATEGORIES
+    expected_cols = ["Name", "ReviewDate", "Review", "Question"] + CATEGORIES
     missing_cols = [col for col in expected_cols if col not in df.columns]
     if missing_cols:
         raise ValueError(f"Missing columns: {missing_cols}")
@@ -54,10 +54,18 @@ def transform_csv_to_yaml(csv_path, yaml_path):
         else:
             review_text = str(review_text)
         
+        # Handle NaN values in Question
+        question = row["Question"]
+        if pd.isna(question):
+            question = ""
+        else:
+            question = str(question)
+        
         # Create review object with all fields
         review = {
             "name": row["Name"],
             "date": row["ReviewDate"],
+            "question": question,
             "text": review_text,
             "categories": categories_list
         }
